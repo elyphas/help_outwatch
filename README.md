@@ -1,15 +1,22 @@
 ﻿Handler
 
+Newer version it looks like the patterns changes from 
+
+`val  textValues = createStringHandler()` 
+
+to 
+
+`val textValues = Handler.create[String].unsafeRunSync()` 
+
+With a referential transparent API.
 
 `Handler` is an invariant Functor.
 
-If you want to go from `Handler[A]` to `Handler[B]` use `imap`.  which means you need to provide two functions, one from A => B and one from B => A
-
-and has a referential transparent API
+If you want to go from `Handler[A]` to `Handler[B]` use `imap`.  which means you need to provide two functions, one from `A => B` and one from `B => A`
 
 Because if you think about it, how would a function `A => B` be enough, now you have a new `Handler` that can emit items of type `B` using the function `A => B`, but now when you want to pipe new elements of type `B` into the `Handler` it can’t translate them back to `A`. This means that `map` on `Handler` returns an `Observable` where you can’t pipe any elements back into it, but you can still get a new handler by using `imap` and giving the `Handler` both functions.
-Here are the cats docs on `Invariant` functors btw (: https://typelevel.org/cats/typeclasses/invariant.html
 
+Here are the cats docs on `Invariant` functors btw (: https://typelevel.org/cats/typeclasses/invariant.html
 
 radio button group with a handler
 
@@ -21,15 +28,11 @@ Handler.create[Int].flatMap { radioHandler =>
 		input(tpe := "radio", name := "test_radio", onChange(3) --> radioHandler),            
 		div("Selected: ", child <-- radioHandler)
           )
-}```
+}
+```
 
 
-Newer version it looks like the patterns changes from 
-`val  textValues = createStringHandler()` 
-to 
-`val textValues = Handler.create[String].unsafeRunSync()` 
-
-is that right? when is the right time to put the .unsafeRunSync on there?
+when is the right time to put the .unsafeRunSync on there?
 
 It’d be better to wrap the whole thing in a for-expression instead 
 I.e.\n```scala\nfor {\n  additions <- Handler.create(0)\n  subtractions <- Handler.create(0)\n  state = Observable.merge(additions, subtractions)\n      .scan(0)((acc,cur) => acc + cur)\n} yield …\n```
