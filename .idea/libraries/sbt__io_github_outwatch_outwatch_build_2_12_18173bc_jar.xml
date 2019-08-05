@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: io.github.outwatch.outwatch:build_2.12:18173bc:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/io.github.outwatch.outwatch/build_2.12/jars/build_2.12-18173bc.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/io.github.outwatch.outwatch/build_2.12/srcs/build_2.12-18173bc-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
